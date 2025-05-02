@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToneAi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <h1>ToneAi</h1>
+        <h3>
+            Welcome to ToneAi – an intelligent platform that analyzes text sentiment and converts it into expressive speech matching the mood (Positive, Neutral, Negative).
+            Discover how words can feel and speak using advanced AI technologies.
+        </h3>
+    </header>
+
+    <main>
+        <section>
+            <form method="POST">
+                <label for="user-text">Text To Speech:</label><br>
+                <textarea id="user-text" name="user-text" rows="6" cols="60" placeholder="Enter your Text..."></textarea><br><br>
+                <button type="submit" id="analyzeButton">Analyze Sentiment</button>
+                <button type="button" id="speakButton" disabled>Speak Text</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Result:</h2>
+            <p id="result">{{ result }}</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>GRADUATION_POJECT - 2025</p>
+    </footer>
+
+    <script>
+        const analyzeButton = document.getElementById('analyzeButton');
+        const speakButton = document.getElementById('speakButton');
+        const textToSpeakInput = document.getElementById('user-text');
+        const resultParagraph = document.getElementById('result');
+        const synth = window.speechSynthesis;
+
+        let sentimentResult = null;
+
+        analyzeButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const text = textToSpeakInput.value;
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `user-text=${encodeURIComponent(text)}`,
+            })
+            .then(response => response.text())
+            .then(data => {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = data;
+                const resultElement = tempDiv.querySelector('#result');
+                if (resultElement) {
+                    resultParagraph.textContent = resultElement.textContent;
+                    speakButton.disabled = false;
+                } else {
+                    resultParagraph.textContent = "Error analyzing sentiment.";
+                    speakButton.disabled = true;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultParagraph.textContent = "Error communicating with the server.";
+                speakButton.disabled = true;
+            });
+        });
+
+        speakButton.addEventListener('click', function() {
+            const utterance = new SpeechSynthesisUtterance(textToSpeakInput.value);
+            // يمكنك هنا تعديل خصائص utterance بناءً على sentimentResult لو حبيت
+            synth.speak(utterance);
+        });
+    </script>
+
+</body>
+</html>

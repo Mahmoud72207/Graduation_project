@@ -1,0 +1,158 @@
+/* External CSS file: style.css */
+
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: #333;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Header styles */
+header {
+  margin-bottom: 40px;
+  color: white;
+}
+
+header h1 {
+  font-size: 4rem;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+header h3 {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: #f0f0f0;
+  font-weight: 400;
+}
+
+/* Form section styles */
+form {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+form:hover {
+  transform: scale(1.05);
+}
+
+form label {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+
+form textarea {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  resize: vertical;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+form textarea:focus {
+  border-color: #2575fc;
+  outline: none;
+}
+
+form button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #6a11cb;
+}
+
+form button:active {
+  background-color: #1d5b9c;
+}
+
+form button#speakButton {
+  margin-top: 10px; /* مساحة بين الزرين */
+}
+
+form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Result section styles */
+section h2 {
+  font-size: 1.7rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+#result {
+  font-size: 1.3rem;
+  color: #555;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  min-height: 50px;
+  font-style: italic;
+  transition: background-color 0.3s ease;
+}
+
+#result:empty {
+  color: #aaa;
+  font-style: normal;
+  font-size: 1.2rem;
+}
+
+#result.analyzed {
+  background-color: #e0f7fa;
+  color: #00796b;
+}
+
+/* Footer styles */
+footer {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  font-size: 1rem;
+  color: white;
+  opacity: 0.7;
+}
+
+footer p {
+  margin: 0;
+}
