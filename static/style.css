@@ -120,16 +120,28 @@ section h2 {
   font-weight: 700;
 }
 
-#result {
-  font-size: 1.3rem;
-  color: #555;
-  background-color: #f9f9f9;
+/* Scrollable Result Container */
+#result-container {
+  max-height: 200px; /* أقصى ارتفاع للحاوية */
+  overflow-y: auto; /* إضافة شريط تمرير عمودي إذا زاد المحتوى */
+  background-color: #fff;
   padding: 15px;
   border-radius: 8px;
   border: 2px solid #ddd;
-  min-height: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* Result paragraph inside container */
+#result {
+  font-size: 1.1rem; /* تم تقليل حجم الخط قليلاً */
+  color: #555;
+  white-space: pre-wrap; /* للحفاظ على تنسيق المسافات وفواصل الأسطر */
+  word-break: break-word; /* لكسر الكلمات الطويلة ومنعها من الخروج عن الحدود */
   font-style: italic;
-  transition: background-color 0.3s ease;
+  line-height: 1.8; /* زيادة المسافة بين السطور */
+  text-align: left; /* ضمان أن النص يبدأ من اليسار */
+  padding-bottom: 10px; /* إضافة تباعد داخلي أسفل النص لو احتاجت scroll */
 }
 
 #result:empty {

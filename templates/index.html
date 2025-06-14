@@ -27,7 +27,9 @@
 
         <section>
             <h2>Result:</h2>
-            <p id="result">{{ result }}</p>
+            <div id="result-container">
+                <p id="result">{{ result|safe }}</p>
+            </div>
         </section>
     </main>
 
@@ -42,8 +44,6 @@
         const resultParagraph = document.getElementById('result');
         const synth = window.speechSynthesis;
 
-        let sentimentResult = null;
-
         analyzeButton.addEventListener('click', function(event) {
             event.preventDefault();
             const text = textToSpeakInput.value;
@@ -56,14 +56,14 @@
             })
             .then(response => response.text())
             .then(data => {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = data;
-                const resultElement = tempDiv.querySelector('#result');
-                if (resultElement) {
-                    resultParagraph.textContent = resultElement.textContent;
+                // بما أن Flask أصبح يرجع النص المباشر (الذي يحتوي على <br>)
+                // وليس صفحة HTML كاملة، فإن 'data' هي النتيجة المطلوبة مباشرة.
+                if (data) {
+                    resultParagraph.innerHTML = data; // نضع الـ data مباشرة في innerHTML
                     speakButton.disabled = false;
                 } else {
-                    resultParagraph.textContent = "Error analyzing sentiment.";
+                    // في حالة عدم وجود بيانات (data فارغة)، أو وجود رسالة خطأ من الخادم
+                    resultParagraph.textContent = "Error analyzing sentiment or empty response.";
                     speakButton.disabled = true;
                 }
             })
@@ -75,9 +75,16 @@
         });
 
         speakButton.addEventListener('click', function() {
-            const utterance = new SpeechSynthesisUtterance(textToSpeakInput.value);
-            // يمكنك هنا تعديل خصائص utterance بناءً على sentimentResult لو حبيت
-            synth.speak(utterance);
+            // هذا الجزء سينطق النص كما يظهر في فقرة النتيجة، بما في ذلك رموز المشاعر.
+            // إذا أردت نطق الجمل فقط بدون الرموز، ستحتاج منطق إضافي لفلترة النص.
+            const textToSpeak = resultParagraph.textContent; 
+
+            if (textToSpeak && textToSpeak !== "لم يتم التحليل بعد" && textToSpeak !== "Please enter some text to analyze." && textToSpeak !== "Error analyzing sentiment or empty response." && textToSpeak !== "Error communicating with the server.") {
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                synth.speak(utterance);
+            } else {
+                alert("No valid text to speak or text not yet analyzed.");
+            }
         });
     </script>
 
